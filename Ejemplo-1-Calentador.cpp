@@ -23,12 +23,18 @@ Calentador::Calentador() // "::" Operador de alcance--> a que clase pertenece
 
 void Calentador::calentar()
 {
-    temperatura += 5;
+    if( temperatura + incremento <= 30)
+    {
+        temperatura += incremento;
+    }
 }
 
 void Calentador::enfriar()
 {
-    temperatura -=5;
+    if(temperatura - incremento >= -10)
+    {
+        temperatura -= incremento;
+    }
 }
 
 void Calentador::imprimeTemperatura()
@@ -38,18 +44,25 @@ void Calentador::imprimeTemperatura()
 
 int Calentador::accedeTemperatura() const // Lo que regresa "int" a que clase pertenece "::" 
 {
-    
+    return temperatura;
 }
 
 int main()
 {
     
     Calentador C1;
+    Calentador C2;
     
-    C1.calentar();
-    C1.imprimeTemperatura(); // Se escribe con el punto por que es un metodo
+    for (int i = 0; i < 10; i++)
+    {
+        C1.calentar();
+        C1.imprimeTemperatura(); // Se escribe con el punto por que es un metodo
+    }
     
     
-    C1.enfriar();
-    C1.imprimeTemperatura();
+    for (int j = 0; j < 10; i++)
+    {
+        C2.enfriar();
+        C2.imprimeTemperatura();
+    }
 }
