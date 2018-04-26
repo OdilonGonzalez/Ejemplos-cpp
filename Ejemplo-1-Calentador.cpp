@@ -5,9 +5,11 @@ class Calentador
 private:
     int temperatura;
     int incremento;
+    int min;
+    int max;
     
 public:
-    Calentador();
+    Calentador(int min, int max, int temperatura); //Prototipo
     void calentar();
     void enfriar();
     void imprimeCentigrados();
@@ -16,15 +18,30 @@ public:
     
 }; //Poner ; al final de la clase
 
-Calentador::Calentador() // "::" Operador de alcance--> a que clase pertenece
+Calentador::Calentador(int min, int max, int temperatura = 0) // "::" Operador de alcance--> a que clase pertenece
 {
-    temperatura = 15;
+    if(min > max)
+    {
+       std:: "Error en el rango min-max" << std::endln ;
+        std::exit(EXIT_FAILURE);
+        
+    }
+        if(temperatura >= min && temperatura <= max)
+        {
+        this->temperatura = temperatura;
+        }
+        else
+        {
+            this->temperatura = min;
+        }
     incremento = 3;
+    this->min = min; //this es un apuntador
+    this->max = max;
 }
 
 void Calentador::calentar()
 {
-    if( temperatura + incremento <= 30)
+    if( temperatura + incremento <= this->max)
     {
         temperatura += incremento;
     }
@@ -32,7 +49,7 @@ void Calentador::calentar()
 
 void Calentador::enfriar()
 {
-    if(temperatura - incremento >= -10)
+    if(temperatura - incremento >= this->min)
     {
         temperatura -= incremento;
     }
@@ -55,9 +72,9 @@ int Calentador::accedeTemperatura() const // Lo que regresa "int" a que clase pe
 
 int main()
 {
-    
-    Calentador C1;
-    Calentador C2;
+    //try{
+    Calentador C1{-10,10}; //Parametro por omision
+    Calentador C2{0,30, -10};
     
         C1.calentar();
         C1.imprimeCentigrados(); // Se escribe con el punto por que es un metodo
@@ -66,5 +83,6 @@ int main()
         C2.enfriar();
         C2.imprimeCentigrados();
         C2.imprimeFarenheit();
+   // catch(const std::runtime_error &e)
 
 }
