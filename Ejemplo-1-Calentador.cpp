@@ -23,7 +23,7 @@ Calentador::Calentador(int min, int max, int temperatura = 0) // "::" Operador d
 {
     if(min < max)
     {
-       std:: "Error en el rango min-max\n";
+       std::cout << "Error en el rango min-max\n";
         std::exit(EXIT_FAILURE);
         
     }
