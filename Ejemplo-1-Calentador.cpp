@@ -10,19 +10,20 @@ private:
     
 public:
     Calentador(int min, int max, int temperatura); //Prototipo
-    void calentar();
-    void enfriar();
+    void operator++();
+    void operator--();
     void imprimeCentigrados();
     void imprimeFarenheit() const;
     int accedeTemperatura() const; // Metodo de acceso, este metodo no modifica las variables, se le agrega el const a este tipo de metodos
+    bool operator ==(Calentador otro);
     
 }; //Poner ; al final de la clase
 
 Calentador::Calentador(int min, int max, int temperatura = 0) // "::" Operador de alcance--> a que clase pertenece
 {
-    if(min > max)
+    if(min < max)
     {
-       std:: "Error en el rango min-max" << std::endln ;
+       std:: "Error en el rango min-max\n";
         std::exit(EXIT_FAILURE);
         
     }
@@ -39,7 +40,7 @@ Calentador::Calentador(int min, int max, int temperatura = 0) // "::" Operador d
     this->max = max;
 }
 
-void Calentador::calentar()
+void Calentador::operator++()
 {
     if( temperatura + incremento <= this->max)
     {
@@ -47,7 +48,7 @@ void Calentador::calentar()
     }
 }
 
-void Calentador::enfriar()
+void Calentador::operator--()
 {
     if(temperatura - incremento >= this->min)
     {
@@ -70,19 +71,40 @@ int Calentador::accedeTemperatura() const // Lo que regresa "int" a que clase pe
     return temperatura;
 }
 
+bool Calentador::operator ==(Calentador otro)
+{
+ if(this->temperatura == otro.temperatura)
+ {
+     return true;
+     
+ }
+ else
+ {
+     return false;
+ }
+}
+
 int main()
 {
-    //try{
     Calentador C1{-10,10}; //Parametro por omision
-    Calentador C2{0,30, -10};
+    Calentador C2{0, 30, 10};
     
-        C1.calentar();
+        if(C1 == C2)
+        {
+            std::cout << "Iguales\n";
+        }
+        else
+        {
+            std::cout << "Diferentes\n";
+        }
+        //C1.operator++();
+        ++C1;// Es equivalente a C1.operator++(); 
         C1.imprimeCentigrados(); // Se escribe con el punto por que es un metodo
         C1.imprimeFarenheit();
     
-        C2.enfriar();
+        C2.operator--();
         C2.imprimeCentigrados();
         C2.imprimeFarenheit();
-   // catch(const std::runtime_error &e)
+
 
 }
