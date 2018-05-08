@@ -15,11 +15,11 @@ class Polinomio
         int Coef2;
         int Coef3;
     public:
-        Polinomio(int C1, int C2, int C3); 
-        int operator()(float x);
-        int DimeCoef1();
-        int DimeCoef2();
-        int DimeCoef3();
+        Polinomio(int C1=0, int C2=0, int C3=0); 
+        int operator()(int x);
+        float operator ~();
+        friend void operator <<(std::ostream &,Polinomio);
+        friend void operator >>(std::istream &,Polinomio&);
 };
 
 Polinomio::Polinomio(int C1, int C2, int C3)
@@ -29,36 +29,35 @@ Polinomio::Polinomio(int C1, int C2, int C3)
     this->Coef3 = C3;
 }
 
-int Polinomio::DimeCoef1()
-{
-    return Coef1;
-}
 
-int Polinomio::DimeCoef2()
+int Polinomio::operator()(int x)
 {
-    return Coef2;
-}
-
-int Polinomio::DimeCoef3()
-{
-    return Coef3;
-}
-
-int Polinomio::operator()(float x)
-{
-    int res;
+    return x * x * this->Coef1 + x * Coef2 + Coef3;
     
-    this->Coef1 = this->DimeCoef1 * pow(x,2);
-    this->Coef2 = this->DimeCoef2 * x;
-    
-    res = p->Coef1 + p->Coef2 + p->Coef3;
+}
+
+void operator << (std::ostream &salida,Polinomio poli)
+{
+    salida<<poli.Coef1<<"x^2+"<<poli.Coef2<<"x+"<<poli.Coef3;
+}
+
+void operator >> (std::istream &entrada,Polinomio &poli)
+{
+    entrada>>poli.Coef1>>poli.Coef2>>poli.Coef3;
+}
+
+float Polinomio::operator ~()
+{
+    return ((-Coef1 + std::sqrt(Coef2*Coef2 - 4*Coef1*Coef3))/2*Coef1);
 }
 
 int main()
 {
-    Polinomio P1{1,2,3};
-    int r;
-     P1.operator ()(P1,2);
-    std::cout << "El resultado es: "<< r << std::endl;
-    
+    Polinomio P1;
+    std::cin>>P1;
+    int r = 2;
+    std::cout <<"El polinomio es: "<< P1;
+    std::cout << std::endl;
+    std::cout << "El resultado es: "<< P1(r) << std::endl;
+    std::cout << "El raiz es: "<< ~P1 << std::endl;
 }
